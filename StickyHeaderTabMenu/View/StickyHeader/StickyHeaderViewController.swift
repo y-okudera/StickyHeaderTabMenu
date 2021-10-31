@@ -77,7 +77,7 @@ final class StickyHeaderViewController: UIViewController, BarAppearance, BarHeig
         ])
         setupPagingViewController()
         populateBottomView()
-        addPanGestureToTopViewAndCollectionView()
+        addPanGestureToHeaderView()
     }
 
     override func viewWillLayoutSubviews() {
@@ -173,21 +173,10 @@ final class StickyHeaderViewController: UIViewController, BarAppearance, BarHeig
         pageViewController.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
     }
 
-    func addPanGestureToTopViewAndCollectionView() {
-
+    func addPanGestureToHeaderView() {
         let topViewPanGesture = UIPanGestureRecognizer(target: self, action: #selector(headerViewMoved))
-
         headerView.isUserInteractionEnabled = true
         headerView.addGestureRecognizer(topViewPanGesture)
-
-        /* Adding pan gesture to collection view is overriding the collection view scroll.
-
-        let collViewPanGesture = UIPanGestureRecognizer(target: self, action: #selector(topViewMoved))
-
-        tabCollectionView.isUserInteractionEnabled = true
-        tabCollectionView.addGestureRecognizer(collViewPanGesture)
-
-        */
     }
 
     // MARK: - Action Methods
@@ -196,11 +185,9 @@ final class StickyHeaderViewController: UIViewController, BarAppearance, BarHeig
         dismiss(animated: true)
     }
 
-
-    var dragInitialY: CGFloat = 0
-    var dragPreviousY: CGFloat = 0
-    var dragDirection: DragDirection = .up
-
+    private var dragInitialY: CGFloat = 0
+    private var dragPreviousY: CGFloat = 0
+    private var dragDirection: DragDirection = .up
     @objc func headerViewMoved(_ gesture: UIPanGestureRecognizer) {
 
         var dragYDiff: CGFloat
@@ -220,17 +207,6 @@ final class StickyHeaderViewController: UIViewController, BarAppearance, BarHeig
         default:
             return
         }
-    }
-
-    // MARK: - UI Laying Out Methods
-
-    func setPagingView(toPageWithAtIndex index: Int, andNavigationDirection navigationDirection: UIPageViewController.NavigationDirection) {
-        pageViewController.setViewControllers(
-            [pageCollection.pages[index].contentViewController],
-            direction: navigationDirection,
-            animated: true,
-            completion: nil
-        )
     }
 }
 
@@ -254,6 +230,18 @@ extension StickyHeaderViewController: TabViewDelegate {
         tabView.scrollToItem(toIndexPath: indexPath)
 
         setPagingView(toPageWithAtIndex: indexPath.item, andNavigationDirection: direction)
+    }
+
+    private func setPagingView(
+        toPageWithAtIndex index: Int,
+        andNavigationDirection navigationDirection: UIPageViewController.NavigationDirection
+    ) {
+        pageViewController.setViewControllers(
+            [pageCollection.pages[index].contentViewController],
+            direction: navigationDirection,
+            animated: true,
+            completion: nil
+        )
     }
 }
 
@@ -320,17 +308,7 @@ extension StickyHeaderViewController: InnerTableViewScrollDelegate {
     }
 
     func innerTableViewDidScroll(withDistance scrollDistance: CGFloat) {
-
         headerViewHeightConstraint.constant -= scrollDistance
-
-        /* Don't restrict the downward scroll.
-
-        if headerViewHeightConstraint.constant > topViewInitialHeight {
-
-         headerViewHeightConstraint.constant = topViewInitialHeight
-        }
-
-        */
 
         // ヘッダービューの最大の高さを指定
         if headerViewHeightConstraint.constant > topViewInitialHeight * 1.5 {
@@ -352,7 +330,6 @@ extension StickyHeaderViewController: InnerTableViewScrollDelegate {
     }
 
     func innerTableViewScrollEnded(withScrollDirection scrollDirection: DragDirection) {
-
         // スクロール停止時にローディング中でない且つヘッダービューが最小の高さでなければ、ブラー効果を外す
         if activityIndicatorView.isAnimating || headerViewHeightConstraint.constant <= topViewFinalHeight {
             addBlurEffectToHeaderImageView()
@@ -360,19 +337,9 @@ extension StickyHeaderViewController: InnerTableViewScrollDelegate {
             removeBlurEffectFromHeaderImageView()
         }
 
-        let topViewHeight = headerViewHeightConstraint.constant
-
-        /*
-         *  Scroll is not restricted.
-         *  So this check might cause the view to get stuck in the header height is greater than initial height.
-
-        if topViewHeight >= topViewInitialHeight || topViewHeight <= topViewFinalHeight { return }
-
-        */
-
-        if topViewHeight <= topViewFinalHeight + 20 {
+        if headerViewHeightConstraint.constant <= topViewFinalHeight + 20 {
             scrollToFinalView()
-        } else if topViewHeight <= topViewInitialHeight - 20 {
+        } else if headerViewHeightConstraint.constant <= topViewInitialHeight - 20 {
             switch scrollDirection {
             case .down:
                 scrollToInitialView()
@@ -426,7 +393,6 @@ extension StickyHeaderViewController: InnerTableViewScrollDelegate {
 
 extension StickyHeaderViewController {
 
-    // For debug
     private func refreshView() {
         UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseIn) {
             self.activityIndicatorView.isHidden = false
@@ -436,6 +402,7 @@ extension StickyHeaderViewController {
             }
         }
 
+        // For debug
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
             if self?.activityIndicatorView.isAnimating == true {
                 self?.activityIndicatorView.stopAnimating()
@@ -452,7 +419,10 @@ extension StickyHeaderViewController {
         let blurEffect = UIBlurEffect(style: .light)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = self.headerImageView.bounds
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight] // for supporting device rotation
+
+        // for supporting device rotation
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
         self.headerImageVisualEffectView = blurEffectView
         self.headerImageView.addSubview(blurEffectView)
     }
