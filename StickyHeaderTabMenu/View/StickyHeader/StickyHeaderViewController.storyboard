@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Sticky Header View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="StickyHeaderViewController" id="Y6W-OH-hqX" customClass="StickyHeaderViewController" customModule="StickyHeaderTabMenu" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0gc-A9-tLh">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="138"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="halloween" translatesAutoresizingMaskIntoConstraints="NO" id="SgB-Xy-pzM">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="138"/>
+                                    </imageView>
+                                    <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bcr-F7-6Xd">
+                                        <rect key="frame" x="16" y="47" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="4Fm-P3-ohW"/>
+                                            <constraint firstAttribute="width" constant="30" id="Vi9-jE-eAP"/>
+                                        </constraints>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" image="close"/>
+                                        <connections>
+                                            <action selector="tappedCloseButton:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="m0T-Vn-4DD"/>
+                                        </connections>
+                                    </button>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="7xf-CU-kUa">
+                                        <rect key="frame" x="197" y="47" width="20" height="20"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="bcr-F7-6Xd" firstAttribute="top" secondItem="0gc-A9-tLh" secondAttribute="top" constant="47" id="03v-mF-MTZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="SgB-Xy-pzM" secondAttribute="bottom" id="0sm-DY-uvb"/>
+                                    <constraint firstItem="SgB-Xy-pzM" firstAttribute="top" secondItem="0gc-A9-tLh" secondAttribute="top" id="FTz-hB-Q5E"/>
+                                    <constraint firstAttribute="trailing" secondItem="SgB-Xy-pzM" secondAttribute="trailing" id="egy-9a-KIX"/>
+                                    <constraint firstItem="7xf-CU-kUa" firstAttribute="centerX" secondItem="0gc-A9-tLh" secondAttribute="centerX" id="fA3-co-7BT"/>
+                                    <constraint firstItem="7xf-CU-kUa" firstAttribute="top" secondItem="0gc-A9-tLh" secondAttribute="top" constant="47" id="fAO-yD-EOC"/>
+                                    <constraint firstItem="SgB-Xy-pzM" firstAttribute="leading" secondItem="0gc-A9-tLh" secondAttribute="leading" id="fnc-us-ByW"/>
+                                    <constraint firstAttribute="height" constant="138" id="nmX-d3-oYr"/>
+                                    <constraint firstItem="bcr-F7-6Xd" firstAttribute="leading" secondItem="0gc-A9-tLh" secondAttribute="leading" constant="16" id="tEN-xg-Ef7"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Irx-TF-y2b" customClass="TabView" customModule="StickyHeaderTabMenu" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="138" width="414" height="49"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="49" id="7ye-Ad-rv8"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ecu-PM-Mef">
+                                <rect key="frame" x="0.0" y="187" width="414" height="675"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Irx-TF-y2b" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="1xZ-4B-9WY"/>
+                            <constraint firstItem="ecu-PM-Mef" firstAttribute="bottom" secondItem="vDu-zF-Fre" secondAttribute="bottom" id="9jD-Kz-ZeK"/>
+                            <constraint firstItem="0gc-A9-tLh" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="Dnw-bn-pBb"/>
+                            <constraint firstItem="ecu-PM-Mef" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="EB9-Ek-Tae"/>
+                            <constraint firstItem="ecu-PM-Mef" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="JB9-eM-6NT"/>
+                            <constraint firstItem="Irx-TF-y2b" firstAttribute="top" secondItem="0gc-A9-tLh" secondAttribute="bottom" id="Uuz-fh-7zg"/>
+                            <constraint firstItem="ecu-PM-Mef" firstAttribute="top" secondItem="Irx-TF-y2b" secondAttribute="bottom" id="mYL-WQ-kyu"/>
+                            <constraint firstItem="Irx-TF-y2b" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="v0a-Lx-ia3"/>
+                            <constraint firstItem="0gc-A9-tLh" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="xFB-L6-aMb"/>
+                            <constraint firstItem="0gc-A9-tLh" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="zd7-Af-P9B"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicatorView" destination="7xf-CU-kUa" id="9k8-wg-Jhk"/>
+                        <outlet property="closeButton" destination="bcr-F7-6Xd" id="sYd-wv-9N8"/>
+                        <outlet property="containerView" destination="ecu-PM-Mef" id="g37-97-J0R"/>
+                        <outlet property="headerImageView" destination="SgB-Xy-pzM" id="AyU-1A-B4h"/>
+                        <outlet property="headerView" destination="0gc-A9-tLh" id="vfj-qv-njm"/>
+                        <outlet property="headerViewHeightConstraint" destination="nmX-d3-oYr" id="2Aj-tD-Ukl"/>
+                        <outlet property="headerViewTopConstraint" destination="xFB-L6-aMb" id="moZ-D5-c3Q"/>
+                        <outlet property="tabView" destination="Irx-TF-y2b" id="ZU6-Pf-p7y"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="137.94642857142856"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="close" width="48" height="48"/>
+        <image name="halloween" width="414" height="138"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
